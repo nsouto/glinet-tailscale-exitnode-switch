@@ -84,7 +84,6 @@ EOF
     sed -i "\|^exit 0$|i $MONITOR \&" "$RC_LOCAL"
   fi
 
-  # Start now (avoid duplicates)
   pkill -f "$MONITOR" >/dev/null 2>&1 || true
   "$MONITOR" &
 }
@@ -166,6 +165,10 @@ patch_gl_tailscale() {
         print "            exit_node_ip=\"\""
         print "        fi"
         print ""
+        print "        # Preserve original logic: subnet route advertising stays controlled by lan_enabled/wan_enabled"
+        print "        [ -n \"$exit_node_ip\" ] && lan_enabled=\"1\" || lan_enabled=$(uci -q get tailscale.settings.lan_enabled)"
+        print "        [ -n \"$exit_node_ip\" ] && wan_enabled=\"1\" || wan_enabled=$(uci -q get tailscale.settings.wan_enabled)"
+        print ""
 
         skip=1
         next
@@ -230,6 +233,7 @@ install() {
   echo "Notes:"
   echo "- Ensure Tailscale is enabled in the GL.iNet UI."
   echo "- Select an Exit Node in the UI (exit_node_ip must be non-empty)."
+  echo "- Subnet routes should be advertised (approve them in Tailscale Admin if needed)."
   echo "- The side toggle switch controls whether the exit node is used."
 }
 
