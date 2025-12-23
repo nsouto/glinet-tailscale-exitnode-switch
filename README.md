@@ -46,7 +46,9 @@ This installer applies a minimal and version-tolerant patch to /usr/bin/gl_tails
 
 Run the following command on the router via SSH:
 
+```sh
 curl -fsSL https://raw.githubusercontent.com/nsouto/glinet-tailscale-exitnode-switch/main/glinet-tailscale-exitnode-switch.sh | sh -s -- install
+```
 
 After installation:
 
@@ -60,7 +62,9 @@ After installation:
 
 To restore the original system state:
 
+```sh
 curl -fsSL https://raw.githubusercontent.com/nsouto/glinet-tailscale-exitnode-switch/main/glinet-tailscale-exitnode-switch.sh | sh -s -- uninstall
+```
 
 This restores the backed-up gl_tailscale script and removes the background monitor.
 
@@ -70,14 +74,18 @@ This restores the backed-up gl_tailscale script and removes the background monit
 
 To check installation status:
 
+```sh
 curl -fsSL https://raw.githubusercontent.com/nsouto/glinet-tailscale-exitnode-switch/main/glinet-tailscale-exitnode-switch.sh | sh -s -- status
+```
 
 Useful diagnostics:
 
+```sh
 uci -q get tailscale.settings.enabled
 uci -q get tailscale.settings.exit_node_ip
 . /lib/functions/gl_util.sh; get_switch_button_status
 tailscale status | head -n 40
+```
 
 Monitor log file:
 - /tmp/gl_tailscale_switch_monitor.log
@@ -106,6 +114,8 @@ This project was inspired by the initial idea and direction shared by a communit
 https://forum.gl-inet.com/t/side-toggle-switch-for-tailscale-exit-node/64947/10
 
 Credit goes to that contributor for the original concept that led to this implementation.
+
+In addition, this project was developed with the assistance of AI tools.
 
 ---
 
